@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Meta Tags -->
+    <title>Calculadora de IMC (Índice de Masa Corporal) - Rápida y Precisa</title>
+    <meta name="description" content="Calcula tu Índice de Masa Corporal (IMC) online. Nuestra herramienta gratuita te ayuda a entender tu peso y a tomar decisiones informadas sobre tu salud y bienestar.">
+    <meta name="keywords" content="calculadora imc, calcular imc, indice de masa corporal, que es el imc, imc ideal, salud, peso, altura, bienestar, acerca de, contacto">
+    <meta name="author" content="Tu Nombre o Nombre del Sitio">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* === RESET & GENERAL STYLES === */
+        :root {
+            --primary-color: #007bff;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --danger-color: #dc3545;
+            --light-bg: #f8f9fa;
+            --dark-text: #343a40;
+            --light-text: #f8f9fa;
+            --border-color: #dee2e6;
+        }
+        
+        /* Habilitar el scroll suave para toda la página */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        /* === HEADER & NAVIGATION === */
+        .navbar {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky; /* Hace que el menú se quede fijo arriba */
+            top: 0;
+            z-index: 1000;
+        }
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        .navbar nav a {
+            margin-left: 20px;
+            text-decoration: none;
+            color: var(--dark-text);
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        /* Estilo para el enlace activo */
+        .navbar nav a.active,
+        .navbar nav a:hover {
+            color: var(--primary-color);
+        }
+
+        /* === SECTIONS === */
+        section {
+            padding-top: 80px; /* Espacio para compensar el menú fijo */
+            margin-top: -80px;
+        }
+
+        /* === CALCULATOR SECTION === */
+        .calculadora-wrapper {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+        .descripcion { max-width: 600px; margin-left: auto; margin-right: auto; color: #6c757d; margin-bottom: 2rem; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+        .grupo-formulario { text-align: left; }
+        .grupo-formulario label { display: block; margin-bottom: 0.5rem; font-weight: 600; }
+        .grupo-formulario input { width: 100%; padding: 12px; border: 1px solid var(--border-color); border-radius: 6px; font-size: 1rem; box-sizing: border-box; }
+        .btn-calcular { width: 100%; padding: 14px; background-color: var(--primary-color); color: #fff; border: none; border-radius: 6px; font-size: 1.1rem; font-weight: 600; cursor: pointer; transition: background-color 0.2s; }
+        .btn-calcular:hover { background-color: #0056b3; }
+        .caja-resultado { margin-top: 1.5rem; padding: 1.5rem; border-radius: 8px; font-size: 1.2rem; font-weight: 600; display: none; border-left: 5px solid; }
+        .caja-resultado strong { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+        .bajo-peso { background-color: #e7f3fe; border-color: #007bff; color: #004085; }
+        .normal { background-color: #e9f7ef; border-color: var(--success-color); color: #155724; }
+        .sobrepeso { background-color: #fff8e1; border-color: var(--warning-color); color: #856404; }
+        .obesidad { background-color: #fbeae5; border-color: var(--danger-color); color: #721c24; }
+        .error { background-color: #fbeae5; border-color: var(--danger-color); color: #721c24; }
+
+        /* === INFORMATIONAL CONTENT SECTION === */
+        .info-section { background-color: #fff; padding: 2rem; border-radius: 12px; margin-bottom: 2rem; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); }
+        .info-section h2 { color: var(--primary-color); border-bottom: 2px solid var(--primary-color); padding-bottom: 10px; margin-bottom: 1rem; }
+        .info-section p, .info-section ul { text-align: justify; }
+        .info-section ul { list-style-type: '✓ '; padding-left: 20px; }
+        .info-section li { margin-bottom: 10px; }
+        .interpretation-table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        .interpretation-table th, .interpretation-table td { border: 1px solid var(--border-color); padding: 12px; text-align: left; }
+        .interpretation-table th { background-color: var(--light-bg); font-weight: 700; }
+
+        /* === FOOTER === */
+        footer { text-align: center; padding: 1.5rem; margin-top: 2rem; background-color: var(--dark-text); color: var(--light-text); }
+
+        /* === RESPONSIVE DESIGN === */
+        @media (max-width: 768px) {
+            .navbar { flex-direction: column; gap: 10px; position: static; /* Remove sticky on mobile */ }
+            section { padding-top: 20px; margin-top: 0; }
+        }
+        @media (max-width: 600px) { .form-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <header class="navbar">
+        <a href="#" class="logo">CalculadoraIMC.es</a>
+        <nav>
+            <a href="#calculadora" class="nav-link active">Calculadora</a>
+            <a href="#info" class="nav-link">Información</a>
+            <a href="#acerca" class="nav-link">Acerca de</a>
+            <a href="#contacto" class="nav-link">Contacto</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- CALCULATOR SECTION -->
+        <section id="calculadora">
+            <div class="calculadora-wrapper">
+                <h1>Calculadora de Índice de Masa Corporal (IMC)</h1>
+                <p class="descripcion">Utiliza nuestra herramienta para calcular tu IMC de forma precisa. Es el primer paso para comprender tu salud y peso corporal.</p>
+                <div class="form-grid">
+                    <div class="grupo-formulario"><label for="peso">Tu Peso (en kg)</label><input type="number" id="peso" placeholder="Ej: 70" required></div>
+                    <div class="grupo-formulario"><label for="altura">Tu Altura (en cm)</label><input type="number" id="altura" placeholder="Ej: 175" required></div>
+                </div>
+                <button id="calcularBtn" class="btn-calcular">Calcular mi IMC</button>
+                <div id="resultado" class="caja-resultado"></div>
+            </div>
+        </section>
+
+        <!-- INFORMATION SECTION -->
+        <section id="info" class="info-section">
+            <h2>¿Qué es el Índice de Masa Corporal (IMC)?</h2>
+            <p>El Índice de Masa Corporal (IMC) es una medida que relaciona el peso y la altura de una persona para determinar si su peso se encuentra en una categoría saludable. Aunque no mide directamente la grasa corporal, es un indicador rápido y útil.</p>
+            <h2>¿Cómo se interpreta el resultado?</h2>
+            <table class="interpretation-table">
+                <thead><tr><th>Categoría de IMC</th><th>Rango numérico</th></tr></thead>
+                <tbody>
+                    <tr><td>Bajo peso</td><td>Menos de 18.5</td></tr>
+                    <tr><td>Peso normal o saludable</td><td>18.5 – 24.9</td></tr>
+                    <tr><td>Sobrepeso</td><td>25.0 – 29.9</td></tr>
+                    <tr><td>Obesidad</td><td>30.0 o más</td></tr>
+                </tbody>
+            </table>
+            <p style="margin-top: 1rem;"><strong>Importante:</strong> El IMC no distingue entre masa muscular y grasa. Siempre es recomendable consultar a un profesional de la salud.</p>
+        </section>
+
+        <!-- ABOUT US SECTION -->
+        <section id="acerca" class="info-section">
+            <h2>Acerca de Nosotros</h2>
+            <p>En CalculadoraIMC.es, nuestra misión es proporcionar herramientas de salud que sean accesibles, gratuitas y fáciles de entender. Creemos que el conocimiento es el primer paso hacia un estilo de vida más saludable.</p>
+            <p>Este sitio fue creado con la intención de ofrecer una calculadora de IMC precisa, junto con información clara para que nuestros usuarios puedan tomar decisiones informadas sobre su bienestar. Te animamos a utilizar nuestras herramientas como punto de partida y a consultar siempre a un profesional de la salud para obtener asesoramiento personalizado.</p>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contacto" class="info-section">
+            <h2>Ponte en Contacto</h2>
+            <p>Agradecemos tus comentarios y sugerencias para mejorar nuestro sitio. Si tienes alguna pregunta o has encontrado un error, no dudes en escribirnos.</p>
+            <p>Puedes enviarnos un correo electrónico a:</p>
+            <p style="font-weight: 600; text-align: center; font-size: 1.2rem;"><a href="mailto:contacto@ejemplo.com">contacto@ejemplo.com</a></p>
+            <p><strong>Nota:</strong> No podemos ofrecer asesoramiento médico. Si tienes preguntas sobre tu salud, por favor, consulta a un médico.</p>
+        </section>
+    </div>
+
+    <footer>
+        <p>© 2023 CalculadoraIMC.es - Herramienta informativa para tu bienestar. Consulta siempre a un profesional.</p>
+    </footer>
+
+    <script>
+        // === CALCULATOR LOGIC ===
+        const pesoInput = document.getElementById('peso');
+        const alturaInput = document.getElementById('altura');
+        const calcularBtn = document.getElementById('calcularBtn');
+        const resultadoDiv = document.getElementById('resultado');
+
+        function calcularIMC() {
+            const peso = parseFloat(pesoInput.value);
+            const altura = parseFloat(alturaInput.value);
+            if (isNaN(peso) || isNaN(altura) || peso <= 0 || altura <= 0) {
+                mostrarResultado('Por favor, introduce valores válidos para peso y altura.', 'error');
+                return;
+            }
+            const alturaEnMetros = altura / 100;
+            const imc = peso / (alturaEnMetros * alturaEnMetros);
+            const imcRedondeado = imc.toFixed(1);
+            let categoria = '', claseColor = '';
+            if (imc < 18.5) { categoria = 'Bajo peso'; claseColor = 'bajo-peso'; } 
+            else if (imc < 25) { categoria = 'Peso normal'; claseColor = 'normal'; } 
+            else if (imc < 30) { categoria = 'Sobrepeso'; claseColor = 'sobrepeso'; } 
+            else { categoria = 'Obesidad'; claseColor = 'obesidad'; }
+            const mensajeResultado = `<strong>${imcRedondeado}</strong> Categoría: ${categoria}`;
+            mostrarResultado(mensajeResultado, claseColor);
+        }
+        function mostrarResultado(mensaje, clase) {
+            resultadoDiv.style.display = 'block';
+            resultadoDiv.className = `caja-resultado ${clase}`;
+            resultadoDiv.innerHTML = mensaje;
+        }
+        calcularBtn.addEventListener('click', calcularIMC);
+        pesoInput.addEventListener('keypress', e => { if (e.key === 'Enter') calcularIMC(); });
+        alturaInput.addEventListener('keypress', e => { if (e.key === 'Enter') calcularIMC(); });
+
+        // === ACTIVE LINK & SCROLL LOGIC ===
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= sectionTop - 90) { // 90 es un poco más que la altura del nav
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
